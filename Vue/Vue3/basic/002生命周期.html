@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue3生命周期</title>
+  <script src="./vue@3.2.31.js"></script>
+</head>
+<body>
+  <section id="root">
+    <div>{{message}}</div>
+  </section>
+
+  <script>
+    const app = Vue.createApp({
+      data () {
+        return {
+          message: 'hello, world'
+        }
+      },
+      // 初始化事件和生命周期函数之后调用, 此时还不能够访问 data
+      beforeCreate () {
+        console.log('beforeCreate', this.message);
+      },
+      // 初始化注入和响应式数据之后调用, 此时可以访问 data 了
+      created () {
+        console.log('created', this.message);
+      },
+      // 将 template 模板转化为 render 函数后, 生成真实 DOM 之前调用
+      beforeMount () {
+        console.log('beforeMount', document.getElementById('root').innerHTML || '无');
+      },
+      // 将生成的 DOM 挂载到 DOM 节点后调用
+      mounted () {
+        console.log('mounted', document.getElementById('root').innerHTML);
+      },
+      // 数据发生改变, 虚拟 DOM 生成之前调用
+      beforeUpdate () {
+        console.log('beforeUpdate', document.getElementById('root').innerHTML);
+      },
+      // 数据改变后, 页面更新后调用
+      updated () {
+        console.log('updated', document.getElementById('root').innerHTML);
+      },
+      // 卸载组件实例前调用, 此时还可正常访问 data 等
+      beforeUnmount () {
+        console.log('beforeUnmount', document.getElementById('root').innerHTML);
+      },
+      // 组件完全卸载后调用, 但数据仍可访问, 且卸载完成后 app 不能被重新挂载
+      // 注意, 定时器不会被清空, 所有子组件实例被卸载, 事件监听器被移除, 指令解除绑定
+      unmounted () {
+        console.log('unMounted', document.getElementById('root').innerHTML || '无', this.message);
+      }
+    })
+    const vm = app.mount('#root')
+  </script>
+</body>
+</html>

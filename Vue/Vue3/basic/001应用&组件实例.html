@@ -4,35 +4,33 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Vue3 Start</title>
   <script src="./vue@3.2.31.js"></script>
 </head>
 <body>
-  <section id="root">
-    innerHTML
-  </section>
+  <section id="root"></section>
 
   <script>
-    console.log('Vue:', Vue);
+    console.log('Vue3', Vue);
     const app = Vue.createApp({
       props: {
         title: String
       },
       data () {
         return {
-          message: 'Hello World'
+          message: 'hello, Vue3'
         }
       },
       template: `
+        <h1>{{title}}</h1>
         <div>{{message}}</div>
-        <div>{{title}}</div>
       `
     }, {
-      title: 'Props Title'
+      title: 'propsTitle'
     })
-    console.log('应用实例:', app);
+    console.log('应用实例', app);
     const vm = app.mount('#root')
-    console.log('组件实例:', vm);
+    console.log('组件实例', vm);
   </script>
 </body>
 </html>

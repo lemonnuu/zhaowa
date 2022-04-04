@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue2生命周期</title>
+  <script src="./vue@2.6.9.js"></script>
+</head>
+<body>
+  <section id="app">
+    <div>{{message}}</div>
+  </section>
+
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data () {
+        return {
+          message: 'hello, world'
+        }
+      },
+      template: '<div id="root">{{message}}</div>',
+      // 初始化事件及生命周期函数后调用, 此时还不能够访问 data
+      beforeCreate () {
+        console.log('beforeCreate', this.message);
+      },
+      // 初始化注入和响应式数据后调用, 此时可以访问 data 了
+      created () {
+        console.log('created', this.message);
+      },
+      // 将 template 模板转化为 render 函数后调用, 生成真实 DOM 前调用
+      beforeMount () {
+        console.log('beforeMount', document.getElementById('root'));
+      },
+      // 将生成的 DOM 挂载到 DOM 节点后调用
+      mounted () {
+        console.log('mounted', document.getElementById('root'));
+      },
+      // 数据发生改变, 虚拟 DOM 生成之前调用
+      beforeUpdate () {
+        console.log('beforeUpdate', document.getElementById('root').innerHTML);
+      },
+      // 数据发生改变后, 页面更新后调用
+      updated () {
+        console.log('updated', document.getElementById('root').innerHTML);
+      },
+      // 实例销毁前调用, 此时还能正常访问所有东西
+      beforeDestroy () {
+        console.log('beforeDestroy', document.getElementById('root').innerHTML || '无', this.message);
+      },
+      // 实例销毁完成后调用, 但数据仍可访问, 不过卸载完成之后可以被重新挂载, 
+      // 注意, 定时器不会被清空, 所有子组件实例被卸载, 事件监听器被移除, 指令解除绑定
+      // 通过 vm.$destroy 方法并不会引起页面刷新, 但实例的确被销毁, 我们应该通过 v-if 的方式控制组件生命周期
+      destroyed () {
+        console.log('destroyed', document.getElementById('root').innerHTML || '无', this.message);
+      }
+    })
+  </script>
+</body>
+</html>
